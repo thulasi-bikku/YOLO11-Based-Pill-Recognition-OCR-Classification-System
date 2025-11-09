@@ -5,7 +5,7 @@ try:
     from app import create_app
 
     app = create_app()
-    # print("✓ Successfully imported and created app")
+
 except Exception as e:
     print("✗ Fallback activated due to error:")
     import traceback

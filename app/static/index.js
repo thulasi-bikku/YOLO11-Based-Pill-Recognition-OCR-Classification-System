@@ -67,7 +67,7 @@ async function Detection(imageData) {
         }
 
         const result = data.result || {};
-        // 顯示裁切圖（可選）
+        // 顯示裁切圖
         const container = document.getElementById('photo-container');
         container.innerHTML = '';
         if (result.cropped_image) {
@@ -134,7 +134,7 @@ confirmButton.addEventListener('click', async () => {
 
         // =============== 多候選模式 ===============
         if (result.candidates) {
-            // === 多候選模式 ===
+
             const candidateList = document.getElementById('candidateList');
             candidateList.innerHTML = ''; // 清空
 

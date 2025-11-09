@@ -176,7 +176,7 @@ def get_dominant_colors(image, k=3, ignore_black=True, min_ratio=0.3):
     return [mc["rgb"] for mc in filtered_colors], hex_colors
 
 
-# === 可調參數（預設值放你目前最佳）===
+# === 可調參數 ===
 CIRCLE_LO = 1
 CIRCLE_HI = 1.2
 ELLIPSE_HI = 3.8
@@ -202,7 +202,7 @@ def detect_shape_three_classes(contour, expected_shape=None):
 
             ratio = max(major, minor) / min(major, minor)
             ratios_list.append(ratio)
-            # print(f"🔍 Ellipse ratio: {ratio:.3f}")
+            # print(f"Ellipse ratio: {ratio:.3f}")
             # === classify with global thresholds ===
             if CIRCLE_LO <= ratio <= CIRCLE_HI:
                 shape = "圓形"
@@ -294,11 +294,11 @@ def detect_shape_from_image(cropped_img, original_img=None, expected_shape=None)
             shape = detect_shape_three_classes(main_contour, expected_shape=expected_shape)
 
         if expected_shape:
-            result = "✅" if shape == expected_shape else "❌"
+            result = "OK" if shape == expected_shape else "BAD"
             return shape, result
         return shape, None
     except Exception as e:
-        print(f"❗ 發生錯誤：{e}")
+        print(f"發生錯誤：{e}")
         return "錯誤", None
 
 

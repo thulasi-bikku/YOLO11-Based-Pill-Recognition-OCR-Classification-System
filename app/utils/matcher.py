@@ -25,7 +25,7 @@ def match_ocr_to_front_back_by_permuted_ocr(ocr_texts, df, threshold=0.8):
     combined_all = ''.join(ocr_texts).upper()
     keywords = {"ACETYLCYSTEINE", "ACTEIN"}
     if any(kw in combined_all for kw in keywords):
-        # print("🚀 偵測到藥袋特例（ACETYLCYSTEINE 或 ACTEIN），直接比對學名")#註解SSS
+
         matched_rows = df[df["文字"].str.contains("ACETYLCYSTEINE|ACTEIN", case=False, na=False)]
         if not matched_rows.empty:
             match_row = matched_rows.iloc[0]
@@ -38,7 +38,7 @@ def match_ocr_to_front_back_by_permuted_ocr(ocr_texts, df, threshold=0.8):
                 }
             }
 
-    # === 正常流程：排列 OCR 結果再逐一比對 ===
+    # === 排列 OCR 結果再逐一比對 ===
     permutations = itertools.permutations(ocr_texts)
     for perm in permutations:
         combined_ocr = ''.join(perm).upper()
@@ -142,11 +142,11 @@ def match_top_n_ocr_to_front_back(ocr_texts, df, threshold=0.8, top_n=3):
                         "row": row,
                         "side": "front"
                     })
-                print(f"[DEBUG-F] 比對 {combined_ocr} ↔ {front_text} ➜ score = {score_f:.3f}")
+                # print(f"[DEBUG-F] 比對 {combined_ocr} ↔ {front_text} ➜ score = {score_f:.3f}")
             # 比對 B
             if back_text:
                 score_b = lcs_score(combined_ocr, back_text)
-                print(f"[DEBUG-B] 比對 {combined_ocr} ↔ {back_text} ➜ score = {score_b:.3f}")
+                # print(f"[DEBUG-B] 比對 {combined_ocr} ↔ {back_text} ➜ score = {score_b:.3f}")
                 if score_b >= 0.5:
                     results.append({
                         "score": score_b,

@@ -12,7 +12,7 @@ urls = {
 for filename, url in urls.items():
     dest = os.path.join("models", filename)
     if not os.path.exists(dest):
-        print(f"📥 下載 {filename} ...")
+        print(f"下載 {filename} ...")
         urllib.request.urlretrieve(url, dest)
     else:
-        print(f"✅ {filename} 已存在，跳過下載。")
+        print(f" {filename} 已存在，跳過下載。")

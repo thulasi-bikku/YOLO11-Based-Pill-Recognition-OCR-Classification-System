@@ -20,17 +20,17 @@ body {
 
 .container {
     text-align: center;
-    padding: 2vw; /* 使用視窗寬度的百分比 */
+    padding: 2vw;
     background: #dcefe0;
-    box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1); /* 使用視窗寬度的百分比 */
-    border-radius: 0.8vw; /* 使用視窗寬度的百分比 */
-    width: 80vw; /* 使用視窗寬度的百分比 */
+    box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.1);
+    border-radius: 0.8vw;
+    width: 80vw;
     max-width: 100%;
-    max-width: 500px; /* ✅ 和 upload-buttons 對齊 */
+    max-width: 500px;
     display: flex;
-    flex-direction: column; /* 讓內容垂直排列 */
-    align-items: center; /* 讓內容居中對齊 */
-    height: auto; /* 自動調整高度 */
+    flex-direction: column;
+    align-items: center;
+    height: auto;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -69,7 +69,7 @@ body {
     clear: both;
 }
 
-/* 👇 用這段取代你原本的 .selection-container 區塊 */
+
 .selection-container {
     display: flex;
     align-items: center;
@@ -78,13 +78,13 @@ body {
 }
 
 .selection-container label {
-    flex: 0 0 5.5em; /* 標籤固定寬，自己可調 */
+    flex: 0 0 5.5em;
     text-align: right;
 }
 
 .selection-container input,
 .selection-container select {
-    width: 250px; /* 固定白框寬度，不跟按鈕一起拉長 */
+    width: 250px; /
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid #aaa;
@@ -95,20 +95,20 @@ body {
     text-align: center;
 }
 
-/* 讓顏色 / 外型的下拉選單選項置中 */
+/* 讓顏色與外型的下拉選單選項置中 */
 .selection-container select {
     text-align: center; /* 文字置中 */
-    text-align-last: center; /* ✅ 確保選中項置中 (Chrome/Edge) */
+    text-align-last: center;
 }
 
 
-/* 視頻樣式 */
+/* 影像樣式 */
 video {
-    border: 0.2vw solid #333; /* 使用視窗寬度的百分比 */
-    border-radius: 1vw; /* 使用視窗寬度的百分比 */
+    border: 0.2vw solid #333;
+    border-radius: 1vw;
     max-width: 90%;
-    max-height: 60vh; /* 使用視窗高度的百分比 */
-    margin-bottom: 2vw; /* 添加下邊距讓元素之間有間距 */
+    max-height: 60vh;
+    margin-bottom: 2vw;
 }
 
 .btn-14,
@@ -167,7 +167,7 @@ video {
     -webkit-mask-image: none;
     overflow: hidden;
     margin: 10px;
-    padding: 0.6rem 1.2rem; /* ✅ 恢復 padding 控制大小 */
+    padding: 0.6rem 1.2rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -197,24 +197,24 @@ select {
 
 .selection-container input,
 .selection-container select {
-    width: 250px; /* ✅ 固定白框寬度 */
+    width: 250px;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid #aaa;
 }
 
 #result-area h3 {
-    text-align: center; /* ✅ 置中標題 */
+    text-align: center;
     margin-bottom: 15px;
 }
 
 .window-size {
     margin-top: 2vw;
-    font-size: 2vw; /* 使用視窗寬度的百分比 */
+    font-size: 2vw;
     color: #333;
 }
 
-/* 響應式設計 */
+
 @media (min-width: 320px) {
     .container {
         width: 90%;
@@ -239,34 +239,31 @@ select {
     }
 }
 
-/* 讓上傳區與表單共用同一個寬度殼 */
+/* 讓上傳區與表單共用同一個寬度 */
 .form-width {
     width: 100%;
-    max-width: 520px; /* ← 想要多寬就改這個數字 */
-    margin: 0 auto; /* 置中 */
+    max-width: 520px;
+    margin: 0 auto;
 }
 
-/* → 下一行本來就是你的 .upload-buttons {...} */
-
 /* 上傳/拍照專用按鈕 */
-/* 上傳/拍照專用按鈕容器 */
 .upload-buttons {
     display: flex;
     gap: 12px;
-    width: 70%; /* ✅ 和白框保持一致 */
-    max-width: none; /* 取消之前的 500px 限制 */
+    width: 70%;
+    max-width: none;
     margin: 20px 0;
 }
 
 
 /* 單一按鈕 */
 .upload-btn {
-    flex: 1; /* 平均分配寬度 */
-    min-width: 120px; /* ✅ 設定最小寬度，避免太小 */
+    flex: 1;
+    min-width: 120px;
     background: #fff;
     border: 2px solid #000;
     border-radius: 12px;
-    height: 60px; /* 固定高度 */
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -280,24 +277,19 @@ select {
     background: #f0f0f0;
 }
 
-
-/* === 結果區：以白框為主軸、整塊左移 (不影響「辨識結果」h3) === */
 :root {
-    --label-w: 5.5em; /* 標籤固定寬 */
+    --label-w: 5.5em;
     --input-w: min(360px, 70vw); /* 電腦最大 360px，手機自動縮到螢幕 70% */
     --gap: 12px;
 }
 
 
-/* 只調整結果區的每一列 */
 #result-area .selection-container {
     display: flex;
     align-items: center;
     gap: var(--gap);
-    /* 關鍵：把整列往左移 (標籤寬 + 間距) 的一半，讓白框中線落在容器正中央 */
     transform: translateX(calc(-0.5 * (var(--label-w) + var(--gap))));
 }
-
 /* 標籤固定寬、靠右貼齊白框 */
 #result-area .selection-container label {
     flex: 0 0 var(--label-w);
@@ -315,27 +307,24 @@ select {
     text-align-last: center;
 }
 
-/* 小螢幕避免超出（必要時可關閉位移）*/
+/* 小螢幕避免超出*/
 @media (max-width: 420px) {
     #result-area .selection-container {
         transform: none;
     }
 }
 
-/* === 放大白框寬度（維持白框中線對齊） === */
 :root {
-    /* 原本 250px → 放大 */
     --input-w: 360px;
 }
 
-/* 大一點的螢幕再更寬 */
+/* 大一點的螢幕更寬 */
 @media (min-width: 1280px) {
     :root {
         --input-w: 400px;
     }
 }
 
-/* 讓上方兩顆按鈕寬度跟結果區一致（可選） */
 .form-width {
     max-width: calc(var(--label-w) + var(--gap) + var(--input-w));
 }
@@ -356,7 +345,6 @@ select {
     }
 }
 
-/* === 上方上傳按鈕：維持小而緊實，不隨容器撐大 === */
 .upload-buttons {
     width: 100%;
     max-width: calc(var(--label-w) + var(--gap) + var(--input-w));
@@ -364,20 +352,17 @@ select {
 }
 
 .upload-btn {
-    flex: 0 0 auto; /* 不要平均撐滿 */
-    width: auto; /* 依內容寬 */
-    min-width: 160px; /* 想更小就調這裡 */
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 160px;
 }
 
-/* === 底部「確認藥物比對」：與白框同寬、同主軸 === */
-/* 如果這顆按鈕在結果區(#result-area)裡，用這個選擇器就只會影響它 */
 #result-area .btn-14 {
-    width: var(--input-w); /* 跟白框同寬 */
-    transform: translateX(calc(-0.5 * (var(--label-w) + var(--gap)))); /* 同主軸 */
+    width: var(--input-w);
+    transform: translateX(calc(-0.5 * (var(--label-w) + var(--gap))));
     margin-top: 24px;
 }
 
-/* 小螢幕時取消位移、改為自適應 */
 @media (max-width: 420px) {
     #result-area .btn-14 {
         transform: none;
@@ -385,10 +370,9 @@ select {
     }
 }
 
-/* === 通用：確認按鈕與白框同寬、對齊主軸 === */
 .match-btn-wrapper {
     display: flex;
-    justify-content: center; /* 確保 wrapper 置中 */
+    justify-content: center;
     margin-top: 20px;
 }
 
@@ -398,7 +382,6 @@ select {
     transform: translateX(calc(-0.5 * (var(--label-w) + var(--gap))));
 }
 
-/* 小螢幕取消位移避免超出 */
 @media (max-width: 420px) {
     .match-btn-wrapper .btn-14 {
         transform: none;
@@ -410,7 +393,7 @@ select {
 #result-area .btn-14 {
     width: var(--input-w);
     display: block;
-    margin: 24px auto 0; /* ⬅️ 置中 */
+    margin: 24px auto 0;
     transform: none !important;
 }
 
@@ -422,7 +405,7 @@ select {
 
 /* 確認按鈕略小於白框、置中 */
 :root {
-    --btn-w: calc(var(--input-w) - 82px); /* 想更小就把 60px 調大/小 */
+    --btn-w: calc(var(--input-w) - 82px);
 }
 
 #result-area .btn-14,
@@ -440,7 +423,6 @@ select {
     }
 }
 
-/* 讓 iOS 不亂縮放字 */
 html {
     -webkit-text-size-adjust: 100%;
 }
@@ -448,30 +430,30 @@ html {
 /* 手機版調整（≤ 480px） */
 @media (max-width: 480px) {
 
-    /* 1) 別用 vw：固定 padding、容器寬一律貼齊 */
+
     .container {
         padding: 16px !important;
         width: 92vw;
         max-width: 420px;
     }
 
-    /* 2) 表單：改成一欄直排，避免「左標籤右白框」擠壓 */
+
     #result-area .selection-container {
         transform: none !important;
         display: flex;
-        flex-direction: row; /* ✅ 保持左右並排 */
+        flex-direction: row;
         align-items: center;
         gap: 6px;
     }
 
     #result-area .selection-container label {
-        flex: 0 0 4.5em; /* ✅ 縮短標籤寬度 */
+        flex: 0 0 4.5em;
         text-align: right;
     }
 
     #result-area .selection-container input,
     #result-area .selection-container select {
-        width: min(70vw, 220px); /* ✅ 手機自動縮短白框 */
+        width: min(70vw, 220px);
         font-size: 16px; /* 防 iOS 自動放大 */
         padding: 8px 10px;
     }
@@ -490,7 +472,6 @@ html {
         height: 52px;
     }
 
-    /* 4) 確認按鈕：滿寬置中（或你要比白框小就把 100% 改成 calc(100% - 40px)） */
     #result-area .btn-14,
     .match-btn-wrapper .btn-14 {
         width: 100% !important;
@@ -504,12 +485,11 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-/* 手機版（≤480px）修正：不用 vw，表單直排、按鈕滿寬 */
-/* 手機版（≤480px）修正：保持左右並排，但自動縮短白框 */
+
+
 @media (max-width: 480px) {
     /* 每一列：整體置中 */
-    /* === 結果區：每一列水平置中，白框以標題為中心展開 === */
-    /* === 結果區：整列置中後再左移一點 === */
+
     #result-area .selection-container {
         display: flex;
         justify-content: center;
@@ -517,28 +497,26 @@ html {
         gap: 12px;
         margin-top: 20px;
         margin-left: -50px;
-        transform: translateX(-40px);   /* ⬅️ 左移 20px，可自行調整 */
+        transform: translateX(-40px);
     }
 
     /* label 不再固定死在左邊，而是靠右對齊，但仍跟白框綁在一起 */
     #result-area .selection-container label {
-        flex: 0 0 auto;   /* ✅ 不要強制寬度 */
+        flex: 0 0 auto;
         text-align: right;
-        min-width: 4.5em; /* 可調：給一個最小寬，避免換行 */
+        min-width: 4.5em;
     }
 
     /* 白框：隨螢幕動態拉長，但保持在中心線 */
     #result-area .selection-container input,
     #result-area .selection-container select {
-        flex: 0 0 min(70vw, 260px);   /* ✅ 白框在手機會自動縮，桌機最多 320px */
+        flex: 0 0 min(70vw, 260px);
         padding: 6px 10px;
         border-radius: 6px;
         border: 1px solid #aaa;
         text-align: center;
         text-align-last: center;
     }
-
-
 
     /* 上方兩顆按鈕：等寬、較矮 */
     .upload-buttons {
@@ -554,10 +532,10 @@ html {
         height: 52px;
     }
 
-    /* 確認按鈕：滿寬或略小都可以 */
+    /* 確認按鈕*/
     #result-area .btn-14,
     .match-btn-wrapper .btn-14 {
-        width: calc(100% - 24px) !important; /* 想滿寬就改成 100% */
+        width: calc(100% - 24px) !important;
         margin: 20px auto 0;
         transform: none !important;
     }
@@ -566,7 +544,7 @@ html {
 .title-wrapper {
     position: relative;
     display: flex;
-    justify-content: center; /* 讓文字在中間 */
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
     width: 100%;
@@ -574,20 +552,20 @@ html {
 
 .title-icon {
     position: absolute;
-    top: 0; /* 貼齊上邊 */
+    top: 0;
     height: auto;
 }
 
-/* 左圖獨立控制 */
+/* 左圖控制 */
 .left-icon {
     left: 0;
-    width: 60px; /* ✅ 你自己可以改 */
+    width: 60px;
 }
 
-/* 右圖獨立控制 */
+/* 右圖控制 */
 .right-icon {
     right: 0;
-    width: 70px; /* ✅ 你自己可以改 */
+    width: 70px;
 }
 
 
@@ -616,22 +594,21 @@ html {
 /* 統一輸入框樣式 (iOS 會套灰色背景，這裡強制白色) */
 .selection-container input,
 .selection-container select {
-    background-color: #ffffff !important;   /* ✅ 強制白色 */
+    background-color: #ffffff !important;
 
-    -webkit-appearance: none;   /* ✅ 移除 iOS 系統樣式 */
+    -webkit-appearance: none;
     appearance: none;           /* 移除其他瀏覽器預設樣式 */
 }
 
 /* 統一按鈕顏色 */
 .upload-btn {
-    background-color: #ffffff !important;   /* ✅ 強制白底 */
+    background-color: #ffffff !important;   /* 強制白底 */
 
     -webkit-appearance: none;
     appearance: none;
     border: 2px solid #1f2d1f;
 }
 /* 全站文字顏色統一 */
-/* === 全站文字顏色統一 === */
 body,
 .selection-container label,
 .selection-container input,
@@ -641,6 +618,6 @@ body,
 #result-area h3,
 #result-area p,
 #result-area span {
-    color: #2f4f2f !important;   /* ✅ 和「藥物辨識系統」一致 */
+    color: #2f4f2f !important;
 }
 

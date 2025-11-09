@@ -65,7 +65,7 @@ def get_fallback_html():
 </head>
 <body>
     <div class="container">
-        <h1>🏥 Medical Detection APP</h1>
+        <h1>Medical Detection APP</h1>
         <div class="status">
             <h3>服務正常運行中</h3>
             <p>後端 API 已啟動並可接收請求</p>
@@ -95,8 +95,7 @@ def register_routes(app, data_status):
     @app.route("/")
     def index():
         try:
-            # print("=== DEBUG: Rendering index page ===")
-            # 使用 Flask 的 render_template 而不是手動讀取
+
             return render_template("index.html")
         except Exception as e:
             print(f"Error rendering template: {e}")
@@ -203,31 +202,23 @@ def register_routes(app, data_status):
             if not data or "image" not in data:
                 return jsonify({"ok": False, "error": "缺少 image 欄位"}), 400
             b64_data = data["image"]
-            # t1 = time.perf_counter()
-            # print(f"📥 base64 JSON 接收：{(t1 - t0) * 1000:.1f} ms")
 
-            # === 2. 嘗試剝除 base64 header 並解碼 ===
+            # === 2. 嘗試 base64 header 並解碼 ===
             if b64_data.startswith("data:"):
                 b64_data = b64_data.split(",")[1]
             image_bytes = base64.b64decode(b64_data)
-            # t2 = time.perf_counter()
-            # print(f"🧪 base64 解碼成功：{(t2 - t1) * 1000:.1f} ms")
 
-            # === 3. 嘗試用 Pillow 解析圖片格式 ===
             # === 3. 嘗試用 Pillow 解析圖片格式 ===
             image = None
             try:
                 image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-                # （已移除 image.verify() 以避免重複解碼/重開）
+
             except Exception as e:
 
-                print(f"❌ [UPLOAD] Pillow 無法辨識圖片格式: {e}")
+                print(f"[UPLOAD] Pillow 無法辨識圖片格式: {e}")
                 fmt = imghdr.what(None, image_bytes)
-                print(f"❌ [UPLOAD] imghdr 檢測結果: {fmt}")
+                print(f"[UPLOAD] imghdr 檢測結果: {fmt}")
                 return jsonify({"ok": False, "error": "不支援的圖片格式"}), 400
-
-            # t3 = time.perf_counter()
-            # print(f"🖼️ Pillow 解碼驗證：{(t3 - t2) * 1000:.1f} ms")
 
             # === 4. 暫存為圖片檔案（JPEG）===
             import tempfile
@@ -235,26 +226,25 @@ def register_routes(app, data_status):
             temp_path = temp_file.name
             image.save(temp_path, format="JPEG")
             temp_file.close()
-            # t4 = time.perf_counter()
-            # print(f"🧠 圖片儲存至暫存檔：{(t4 - t3) * 1000:.1f} ms")
 
-            # === 5. 呼叫核心辨識邏輯（傳圖片路徑）===
+
+            # === 5. 呼叫核心辨識邏輯 ===
 
             result = process_image(temp_path) or {}
             t5 = time.perf_counter()
-            # 如果 process_image 回傳錯誤 → 不要丟 500，直接回應 JSON
+
             if isinstance(result, dict) and "error" in result:
-                print(f"🟠 [UPLOAD] 無法偵測藥物: {result['error']}")
+                print(f" [UPLOAD] 無法偵測藥物: {result['error']}")
                 return jsonify({
                     "ok": False,
                     "error": "無法偵測藥物，請重新上傳圖片",
                     "result": {"文字辨識": [], "顏色": [], "外型": "", "cropped_image": ""}
-                }), 200  # ✅ 回傳 200，表示 API 正常運作，只是無結果
+                }), 200  # 回傳 200，表示 API 正常運作，只是無結果
 
             # === 6. 回傳 + 結束 ===
             print(
-                f"🟢 [UPLOAD] 推論成功：文字={result['文字辨識']}最佳版本={result['最佳版本']}信心分數={result['信心分數']} 顏色={result['顏色']} 外型={result['外型']}")
-            print(f"⏱️ [UPLOAD] 完成，總耗時 {(t5 - t0):.2f} s")
+                f"[UPLOAD] 推論成功：文字={result['文字辨識']}最佳版本={result['最佳版本']}信心分數={result['信心分數']} 顏色={result['顏色']} 外型={result['外型']}")
+            print(f" [UPLOAD] 完成，總耗時 {(t5 - t0):.2f} s")
 
             return jsonify({"ok": True, "result": result}), 200
 
@@ -262,7 +252,7 @@ def register_routes(app, data_status):
         except Exception as e:
             import traceback
             traceback.print_exc()
-            print(f"🔴 [UPLOAD] 失敗：{e}")
+            print(f" [UPLOAD] 失敗：{e}")
             return jsonify({
                 "ok": False,
                 "error": f"{e}",
@@ -273,7 +263,7 @@ def register_routes(app, data_status):
                 if temp_path and os.path.exists(temp_path):
                     os.remove(temp_path)
             except Exception as e:
-                print(f"⚠️ [UPLOAD] 臨時檔清理失敗：{e}")
+                print(f" [UPLOAD] 臨時檔清理失敗：{e}")
 
     @app.route("/api/status")
     def api_status():
@@ -285,38 +275,37 @@ def register_routes(app, data_status):
             "endpoints": ["/", "/healthz", "/debug", "/api/status"]
         })
 
-    # print("✓ Routes registered successfully")
     MIN_TOP1_ACCEPT = 0.30  # Top-1 分數低於此值 → 請重拍
     HARD_THRESHOLD = 0.80  # 正常門檻
 
     @app.route("/match", methods=["POST"])
     def match_drug():
         """藥物比對路由"""
-        # print("🟡 [MATCH] 收到請求")
+
         try:
             data = request.get_json()
-            # print(
-            #     f"🟡 [MATCH] 請求內容：texts={data.get('texts')}, colors={data.get('colors')}, shape={data.get('shape')}")
+
+
             texts = data.get("texts", [])
             colors = data.get("colors", [])
             shape = data.get("shape", "")
 
             if df.empty:
-                print("🔴 [MATCH] 錯誤：資料庫未載入")
+                print(" [MATCH] 錯誤：資料庫未載入")
                 return jsonify({"error": "資料庫未載入"}), 500
-            # print("🟡 [MATCH] 開始篩選候選藥物")
+
             # 尋找候選藥物
             candidates = set()
             # --- 顏色交集 ---
             color_sets = []
             for color in colors:
                 ids = set(color_dict.get(color, []))
-                print(f"    - 顏色篩選：{color} ➜ {len(ids)} 筆")
+                # print(f"    - 顏色篩選：{color} ➜ {len(ids)} 筆")
                 color_sets.append(ids)
 
             if color_sets:
                 candidates = set.intersection(*color_sets)
-                print(f"    ✅ 顏色交集後 ➜ {len(candidates)} 筆")
+                # print(f"     顏色交集後 ➜ {len(candidates)} 筆")
             else:
                 candidates = set()
 
@@ -325,19 +314,19 @@ def register_routes(app, data_status):
                 before_shape = len(candidates)
                 shape_ids = set(shape_dict.get(shape, []))
                 candidates &= shape_ids
-                print(f"    ✅ 外型交集：{shape} ➜ 從 {before_shape} 筆減為 {len(candidates)} 筆")
+                # print(f"     外型交集：{shape} ➜ 從 {before_shape} 筆減為 {len(candidates)} 筆")
 
             # === 無候選處理 ===
             if not candidates:
-                print("🔴 [MATCH] 沒有符合的候選藥物")
+                # print(" [MATCH] 沒有符合的候選藥物")
                 return jsonify({"error": "找不到符合顏色與外型的藥品"}), 404
 
             # 篩選數據
             df_sub = df[df["用量排序"].isin(candidates)] if "用量排序" in df.columns else df
-            print(f"🟡 [MATCH] 經過篩選剩下 {len(df_sub)} 筆藥物")
+            # print(f"[MATCH] 經過篩選剩下 {len(df_sub)} 筆藥物")
             # 如果沒有文字或文字為空
             if not texts or texts == ["None"]:
-                print("🟡 [MATCH] 無文字情境，搜尋純顏色/外型比對結果")
+                # print(" [MATCH] 無文字情境，搜尋純顏色/外型比對結果")
                 results = []
                 for _, row in df_sub.iterrows():
                     if str(row.get("文字", "")).strip() not in ["F:NONE|B:NONE", "F:None|B:None"]:
@@ -362,17 +351,12 @@ def register_routes(app, data_status):
                     })
 
                 return jsonify({"candidates": results})
-            # print("[DEBUG] STEP 4 - Shape", shape)
-            # 進行 OCR 比對 - 這個函數需要你實作或匯入
-            # === 有文字：先用正常門檻比對 ===
-            # print(f"🟡 [MATCH] 有文字，要進行比對 ➜ {texts}")
-            # match_result = match_ocr_to_front_back_by_permuted_ocr(texts, df_sub, threshold=HARD_THRESHOLD)
 
             top_matches = match_top_n_ocr_to_front_back(texts, df_sub, threshold=HARD_THRESHOLD, top_n=4)
 
             # === 門檻沒過：降門檻取 Top-1 回傳（low_confidence） ===
             if not top_matches:
-                print("🟠 [MATCH] 門檻未通過，啟用 Top-1 回傳（low_confidence）")
+                print("[MATCH] 門檻未通過，啟用 Top-1 回傳（low_confidence）")
                 fallback = match_ocr_to_front_back_by_permuted_ocr(texts, df_sub, threshold=0.0)
 
                 # 從 front/back 取分數最高者
@@ -384,7 +368,7 @@ def register_routes(app, data_status):
                                 best = fallback[side];
                                 best_side = side
 
-                # 若有 Top-1 且分數尚可 → 以低信心單一結果回傳
+                # 低信心單一結果回傳
                 if best and best["score"] >= MIN_TOP1_ACCEPT:
                     row = best["row"]
                     if isinstance(row, pd.Series):
@@ -407,22 +391,22 @@ def register_routes(app, data_status):
                         "low_confidence": True
                     }), 200
 
-                # Top-1 也太低 → 請重拍
+                # 重拍
                 return jsonify({
                     "error": "影像過於模糊或光線不足，建議重拍（請讓藥面填滿畫面、避免反光、對焦清晰）。",
                     "need_retake": True
                 }), 422
-            # === 正常門檻有結果：走原本路徑 ===
+
             # === 正常門檻有結果：組成多筆 candidates 回傳 ===
             results = []
-            seen = set()  # ✅ 用來記錄已經加入的藥物
+            seen = set()  # 用來記錄已經加入的藥物
 
             for match in top_matches:
                 row = match["row"]
                 if isinstance(row, pd.Series):
                     row = row.to_dict()
 
-                # ✅ 用「批價碼」作為唯一識別
+                #  用「批價碼」作為唯一識別
                 drug_id = row.get("批價碼", "")
                 if not drug_id or drug_id in seen:
                     continue

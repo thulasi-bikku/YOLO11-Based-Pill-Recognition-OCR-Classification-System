@@ -41,12 +41,12 @@ def check_pictures(excel_path: Path, image_root: Path):
                 })
 
     # 輸出統計
-    print("\n❌ 沒有任何圖片的藥物：")
+    print("\n 沒有任何圖片的藥物：")
     for item in missing:
         print(f"  - {item['批價碼']} ➜ {item['學名']}")
     print(f"共 {len(missing)} 筆\n")
 
-    print("⚠️ 只有非 .jpg 圖片的藥物：")
+    print(" 只有非 .jpg 圖片的藥物：")
     for item in not_jpg_only:
         print(f"  - {item['批價碼']} ➜ {item['學名']}（{item['圖片副檔名']}）")
     print(f"共 {len(not_jpg_only)} 筆\n")
@@ -57,7 +57,7 @@ def check_pictures(excel_path: Path, image_root: Path):
         pd.DataFrame(missing).to_excel(writer, sheet_name="缺圖", index=False)
         pd.DataFrame(not_jpg_only).to_excel(writer, sheet_name="非JPG圖片", index=False)
 
-    print(f"📝 已輸出報表：{REPORT_PATH}")
+    print(f"已輸出報表：{REPORT_PATH}")
 
 
 if __name__ == "__main__":
