@@ -330,6 +330,7 @@ def process_image(img_path: str):
             # 🚫 不再使用 rembg，直接回傳失敗
             # print("🔴 YOLO 失敗 (0.25 / 0.10)，無法擷取藥品")
             return {"error": "藥品擷取失敗"}
+
     # crop_t1 = time.perf_counter()
 
     # t3 = crop_t1
