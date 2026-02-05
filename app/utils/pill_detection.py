@@ -46,18 +46,34 @@ _det_model = None
 
 
 def get_det_model():
-    """Lazy-load YOLO 權重，只初始化一次"""
+    """Lazy-load YOLO model (YOLO11 preferred, fallback to YOLOv8)"""
     global _det_model
     if _det_model is None:
-        print("[DET] loading YOLO model…")
-        m = YOLO("models/best.pt")
+        # Try YOLO11 model first, then fallback to original
+        yolo11_path = "models/yolo11_pill_best.pt"
+        yolo8_path = "models/best.pt"
+        
+        if os.path.exists(yolo11_path):
+            model_path = yolo11_path
+            model_version = "YOLO11"
+        elif os.path.exists(yolo8_path):
+            model_path = yolo8_path
+            model_version = "YOLOv8"
+        else:
+            # Fallback to YOLO11n pretrained
+            model_path = "yolo11n.pt"
+            model_version = "YOLO11n (pretrained)"
+            print("[DET] No custom model found, using pretrained YOLO11n")
+        
+        print(f"[DET] Loading {model_version} model from {model_path}…")
+        m = YOLO(model_path)
 
         try:
             m.fuse()
         except Exception:
             pass
         _det_model = m
-        print("[DET] model ready")
+        print(f"[DET] {model_version} model ready")
     return _det_model
 
 

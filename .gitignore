@@ -1,7 +1,56 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Application
 temp_imgs/
 uploads/
-.env
 *.log
-*.DS_Store
+.env
+.env.local
+
+# Node (if needed later)
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# Models (optional - comment out if you want to track models)
+# models/*.pt
+# models/*.onnx
+
+# Reports (keep structure, ignore content)
+reports/*.csv
+reports/*.xlsx
+reports/*.json
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Development docs
+AUDIT_REPORT.md
+DEPLOYMENT_CHECKLIST.md
+IMPLEMENTATION_PLAN.md

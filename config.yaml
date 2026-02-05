@@ -1,0 +1,193 @@
+# Pill Identification System Configuration
+# Created: February 5, 2026
+
+# ============================================
+# FEATURE FLAGS
+# ============================================
+features:
+  yolo11_detection: true          # Use YOLO11 if available, else YOLOv8
+  xai_gradcam: true              # Enable Grad-CAM explainability
+  ensemble_ocr: true             # Use multi-engine OCR ensemble
+  trocr_engine: true             # Enable TrOCR (transformer-based)
+  paddle_engine: true            # Enable PaddleOCR
+  qwen_vlm: false                # Vision-Language Model (resource-intensive, disabled by default)
+  synthetic_augmentation: false  # For training only
+  advanced_scoring: true         # Multi-stage confidence scoring
+
+# ============================================
+# MODEL PATHS
+# ============================================
+models:
+  # Detection Models
+  yolo_detector: "models/yolo11_pill_best.pt"
+  yolo_fallback: "models/best.pt"
+  yolo_pretrained: "yolo11n.pt"
+  
+  # OCR Models
+  openocr_det: "models/openocr_det_model.onnx"
+  openocr_rec: "models/openocr_rec_model.onnx"
+  trocr: "microsoft/trocr-base-printed"
+  
+  # Vision-Language Models (optional)
+  qwen_vlm: "Qwen/Qwen2.5-VL-2B-Instruct"  # Use 2B for CPU compatibility
+
+# ============================================
+# OCR ENSEMBLE CONFIGURATION
+# ============================================
+ocr_ensemble:
+  enabled: true
+  weights:
+    openocr: 1.0
+    trocr: 1.2    # Higher weight for transformer-based model
+    paddle: 1.0
+  
+  # Individual engine settings
+  engines:
+    openocr:
+      enabled: true
+      min_score: 0.8
+      backend: "onnx"
+      device: "cpu"
+    
+    trocr:
+      enabled: true
+      model_variant: "base"  # base, small, or large
+      device: "cpu"
+    
+    paddle:
+      enabled: true
+      use_angle_cls: true
+      lang: "en"
+      use_gpu: false
+
+# ============================================
+# CONFIDENCE THRESHOLDS
+# ============================================
+thresholds:
+  # Detection
+  detection_confidence: 0.25
+  
+  # OCR
+  ocr_min_score: 0.8
+  ocr_ensemble_min_engines: 2  # Minimum engines that must succeed
+  
+  # Matching
+  match_threshold: 0.7
+  high_confidence: 0.9
+  low_confidence: 0.5
+  
+  # XAI
+  xai_heatmap_threshold: 0.5
+
+# ============================================
+# CONFIDENCE SCORING WEIGHTS
+# ============================================
+confidence_weights:
+  ocr_text_match: 0.40
+  color_match: 0.20
+  shape_match: 0.15
+  visual_similarity: 0.15
+  ensemble_agreement: 0.10
+
+# ============================================
+# PERFORMANCE SETTINGS
+# ============================================
+performance:
+  # Threading
+  torch_num_threads: 1
+  omp_num_threads: 1
+  openblas_num_threads: 1
+  mkl_num_threads: 1
+  numexpr_num_threads: 1
+  
+  # Batch processing
+  max_batch_size: 4
+  
+  # GPU
+  enable_gpu: false
+  gpu_device: 0
+  
+  # Caching
+  enable_model_cache: true
+  cache_ttl_seconds: 3600
+
+# ============================================
+# IMAGE PROCESSING
+# ============================================
+image_processing:
+  # Detection
+  yolo_imgsz: 640
+  yolo_conf: 0.25
+  yolo_iou: 0.45
+  
+  # OCR preprocessing
+  ocr_rotation_angles: [0, 90, 180, 270]  # Reduced from 8 angles for speed
+  generate_image_versions: false  # Disable for speed, was creating 6 versions
+  
+  # Augmentation (training only)
+  augmentation:
+    enabled: false
+    variations_per_image: 10
+    output_dir: "data/augmented"
+
+# ============================================
+# EXPLAINABLE AI (XAI)
+# ============================================
+xai:
+  enabled: true
+  method: "EigenCAM"  # Options: GradCAM, EigenCAM, GradCAMPlusPlus
+  colormap: "jet"     # Heatmap color scheme
+  alpha: 0.4          # Overlay transparency
+  return_heatmap: true
+
+# ============================================
+# VISION-LANGUAGE MODEL (VLM)
+# ============================================
+vlm:
+  enabled: false  # Resource-intensive, enable only for advanced queries
+  model: "Qwen/Qwen2.5-VL-2B-Instruct"
+  max_tokens: 128
+  temperature: 0.7
+  queries:
+    default: "Describe this pill including shape, color, and any visible text or numbers."
+    extract_attributes: "Extract from this pill: 1) Shape (round/oval/capsule), 2) Primary color, 3) Any text or numbers visible, 4) Distinctive features."
+
+# ============================================
+# DATA PATHS
+# ============================================
+data:
+  database: "data/TESTData.xlsx"
+  pictures: "data/pictures"
+  temp_folder: "./temp_imgs"
+  reports_folder: "reports"
+  e2e_results: "e2e_results"
+
+# ============================================
+# LOGGING
+# ============================================
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "[%(levelname)s] %(message)s"
+  file: "logs/pill_identification.log"
+  max_size_mb: 10
+  backup_count: 5
+
+# ============================================
+# API SETTINGS
+# ============================================
+api:
+  host: "0.0.0.0"
+  port: 10000
+  debug: false
+  cors_enabled: true
+  max_upload_size_mb: 16
+  allowed_extensions: ["png", "jpg", "jpeg", "gif", "heic"]
+
+# ============================================
+# EXPERIMENTAL FEATURES
+# ============================================
+experimental:
+  active_learning: false
+  3d_orientation_detection: false
+  multi_language_ocr: false
+  real_time_video: false
