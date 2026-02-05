@@ -1,4 +1,4 @@
-# 💊 Advanced Pill Identification System
+# YOLO11-Based Multi-Modal Pharmaceutical Tablet Recognition and OCR Classification System
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Flask](https://img.shields.io/badge/flask-3.0+-green.svg)](https://flask.palletsprojects.com/)
@@ -9,38 +9,38 @@ A state-of-the-art pill identification system using **YOLO11** object detection,
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
-### 🎯 Advanced Object Detection
+### Advanced Object Detection
 - **YOLO11 Integration**: Latest ultralytics YOLO11 with 22% fewer parameters than YOLOv8
 - **Automatic Fallback**: Gracefully falls back to YOLOv8 if YOLO11 model unavailable
 - **High Accuracy**: Optimized for pill detection with shape and color analysis
 
-### 📝 Multi-Engine OCR Ensemble
+### Multi-Engine OCR Ensemble
 - **OpenOCR**: Fast ONNX-based baseline OCR engine
 - **TrOCR**: Microsoft's transformer-based OCR for curved/rotated text (98.73% accuracy)
 - **PaddleOCR**: Baidu's multilingual OCR supporting 80+ languages
 - **Weighted Voting**: Intelligent ensemble combining all engines with configurable weights
 
-### 🔍 Explainable AI (XAI)
+### Explainable AI (XAI)
 - **Grad-CAM Visualizations**: Heatmaps showing where the model focuses
 - **Multiple Methods**: EigenCAM, GradCAM, GradCAMPlusPlus support
 - **Detection Confidence**: Visual feedback for transparency and debugging
 
-### 🎨 Pill Analysis
+### Pill Analysis
 - **Shape Detection**: Identifies pill shapes (round, oval, capsule, etc.)
 - **Color Analysis**: RGB color extraction and classification
 - **Text Recognition**: Multi-angle OCR with rotation support
 - **Database Matching**: Fuzzy matching against pill database with LCS scoring
 
-### ⚙️ Configuration System
+### Configuration System
 - **Feature Flags**: Enable/disable features via YAML configuration
 - **Performance Tuning**: Adjustable confidence thresholds, batch sizes, OCR weights
 - **Resource Management**: Control memory usage by toggling heavy features
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.10 or higher
@@ -87,7 +87,7 @@ gunicorn -w 4 -b 0.0.0.0:10000 main:app
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Pill_Identification_OCR-based/
@@ -125,7 +125,7 @@ Pill_Identification_OCR-based/
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 Edit `config.yaml` to customize system behavior:
 
@@ -159,7 +159,7 @@ performance:
 
 ---
 
-## 📚 API Documentation
+## API Documentation
 
 ### `/api/detect` - Pill Detection & Identification
 
@@ -216,7 +216,7 @@ curl -X POST http://localhost:10000/api/detect \
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Single Image Test
 ```bash
@@ -235,7 +235,7 @@ python check_pictures.py
 
 ---
 
-## 🎓 How It Works
+## System Architecture and Processing Pipeline
 
 ### 1. **Image Upload & Preprocessing**
 - User uploads pill image via web interface or API
@@ -275,7 +275,7 @@ python check_pictures.py
 
 ---
 
-## 🛠️ Advanced Usage
+## Advanced Usage
 
 ### Custom Model Training
 
@@ -339,7 +339,7 @@ performance:
 
 ---
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 
 | Configuration | Memory Usage | Inference Time | Accuracy |
 |--------------|-------------|----------------|----------|
@@ -352,7 +352,7 @@ performance:
 
 ---
 
-## 🔒 Security Considerations
+## Security Considerations
 
 - **Input Validation**: All uploads validated for type, size, malicious content
 - **File Size Limits**: Configurable maximum upload size
@@ -362,7 +362,7 @@ performance:
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Model Loading Issues
 **Problem**: "Model file not found"  
@@ -396,7 +396,7 @@ performance:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these guidelines:
 
@@ -424,43 +424,16 @@ pytest tests/
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Ultralytics**: YOLOv11 and YOLOv8 models
 - **Microsoft**: TrOCR transformer OCR
 - **Baidu**: PaddleOCR multilingual engine
 - **OpenCV**: Computer vision library
 - **Flask**: Web framework
-
----
-
-## 📧 Contact
-
-**Project Maintainer**: Rajashekhar Sunkara  
-**Email**: your.email@example.com  
-**GitHub**: [@yourusername](https://github.com/yourusername)
-
----
-
-## 📈 Roadmap
-
-- [x] YOLO11 integration
-- [x] Multi-engine OCR ensemble
-- [x] Grad-CAM explainability
-- [ ] Mobile app (React Native)
-- [ ] Real-time video processing
-- [ ] Cloud deployment (AWS/GCP)
-- [ ] Multi-language interface
-- [ ] API authentication & rate limiting
-- [ ] Prescription verification
-- [ ] Drug interaction warnings
-
----
-
-**Built with ❤️ for safer medication management**
